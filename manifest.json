@@ -1,0 +1,30 @@
+{
+  "manifest_version": 2,
+  "background": {
+    "scripts": [
+      "scripts/background.js"
+    ],
+    "persistent": true
+  },
+  "name": "NHentai Code",
+  "description": "NHentai Code",
+  "version": "1.0.0",
+  
+  "browser_action": {
+    "default_icon": "icon/icon.png"
+  },
+  "icons": {
+    "128": "icon/icon.png",
+    "16": "icon/icon.png",
+    "48": "icon/icon.png"
+  },
+  "permissions": ["contextMenus","tabs"],
+  "content_scripts" : [
+    {
+        "run_at" : "document_idle",
+        "matches": ["<all_urls>"],
+        "js": ["/scripts/inject.js"]
+    }
+]
+  
+}

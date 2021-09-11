@@ -7,7 +7,7 @@ var cm_clickHandler = function(clickData, tab) {
 chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
     if (msg.request === 'NhentaiContextMenu') {
         var type = msg.selection;
-        let index = type.trim().search(/^\d{5,7}$/i);
+        let index = type.trim().search(/^\d+$/i);
         if (index == -1) {
             if (cmid != null) {
                 chrome.contextMenus.remove(cmid);

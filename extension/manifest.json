@@ -6,8 +6,8 @@
     ],
     "persistent": true
   },
-  "name": "NHentai Code",
-  "description": "NHentai Code",
+  "name": "Hentai Code",
+  "description": "Hentai Code",
   "version": "1.0.0",
   
   "browser_action": {

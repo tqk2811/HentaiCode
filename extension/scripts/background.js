@@ -1,25 +1,31 @@
 var options = [
     {
         cmid: null,
-        title: "Hentai",
-        id: "hentai_root"
-    },
-    {
-        cmid: null,
-        title: "Goto %s on NHentai",
-        contexts: ['selection'],
-        parentId: "hentai_root",
-        onclick: function(clickData, tab) {
-            chrome.tabs.create({url : "https://nhentai.net/g/" + clickData.selectionText.trim() });
+        menu: {
+            title: "Hentai",
+            id: "hentai_root"
         }
     },
     {
         cmid: null,
-        title: "Goto %s on HentaiVn",
-        contexts: ['selection'],
-        parentId: "hentai_root",
-        onclick: function(clickData, tab) {
-            chrome.tabs.create({url : `https://hentaivn.tv/${clickData.selectionText.trim()}-doc-truyen-.html` });
+        menu:{
+            title: "Goto %s on NHentai",
+            contexts: ['selection'],
+            parentId: "hentai_root",
+            onclick: function(clickData, tab) {
+                chrome.tabs.create({url : "https://nhentai.net/g/" + clickData.selectionText.trim() });
+            }
+        }
+    },
+    {
+        cmid: null,
+        menu:{
+            title: "Goto %s on HentaiVn",
+            contexts: ['selection'],
+            parentId: "hentai_root",
+            onclick: function(clickData, tab) {
+                chrome.tabs.create({url : `https://hentaivn.tv/${clickData.selectionText.trim()}-doc-truyen-.html` });
+            }
         }
     }
 ];
@@ -41,11 +47,11 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
             options.forEach(function(option) {
                 if (option.cmid != null) 
                 {
-                    chrome.contextMenus.update(cmid, option);
+                    chrome.contextMenus.update(cmid, option.menu);
                 }
                 else
                 {
-                    option.cmid =chrome.contextMenus.create(option);
+                    option.cmid = chrome.contextMenus.create(option.menu);
                 }
             });
         }

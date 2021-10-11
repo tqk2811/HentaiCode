@@ -1,14 +1,28 @@
 var options = [
     {
         cmid: null,
-        menu: {
+        create: {
             title: "Hentai",
-            id: "hentai_root"
+            id: "hentai_root",
+            contexts: ['selection'],
+        },
+        update: {
+            title: "Hentai",
+            contexts: ['selection'],
         }
     },
     {
         cmid: null,
-        menu:{
+        create:{
+            title: "Goto %s on NHentai",
+            contexts: ['selection'],
+            parentId: "hentai_root",
+            id: "child_NHentai",
+            onclick: function(clickData, tab) {
+                chrome.tabs.create({url : "https://nhentai.net/g/" + clickData.selectionText.trim() });
+            }
+        },
+        update: {
             title: "Goto %s on NHentai",
             contexts: ['selection'],
             parentId: "hentai_root",
@@ -19,7 +33,16 @@ var options = [
     },
     {
         cmid: null,
-        menu:{
+        create:{
+            title: "Goto %s on HentaiVn",
+            contexts: ['selection'],
+            parentId: "hentai_root",
+            id: "child_HentaiVN",
+            onclick: function(clickData, tab) {
+                chrome.tabs.create({url : `https://hentaivn.tv/${clickData.selectionText.trim()}-doc-truyen-.html` });
+            }
+        },
+        update: {
             title: "Goto %s on HentaiVn",
             contexts: ['selection'],
             parentId: "hentai_root",
@@ -35,23 +58,24 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
         var type = msg.selection;
         let index = type.trim().search(/^\d+$/i);
         if (index == -1) {
-            options.forEach(function(option) {
-                if (option.cmid != null) {
-                    chrome.contextMenus.remove(option.cmid);
-                    option.cmid = null;
-                }
-            });
+            if (options[0].cmid != null) {
+                console.log("remove");
+                chrome.contextMenus.remove(options[0].cmid);
+                options.forEach(function(option) {option.cmid = null;});
+            }
         } 
         else 
         {
             options.forEach(function(option) {
                 if (option.cmid != null) 
                 {
-                    chrome.contextMenus.update(cmid, option.menu);
+                    console.log("update");
+                    chrome.contextMenus.update(option.cmid, option.update);
                 }
                 else
                 {
-                    option.cmid = chrome.contextMenus.create(option.menu);
+                    console.log("create");
+                    option.cmid = chrome.contextMenus.create(option.create);
                 }
             });
         }

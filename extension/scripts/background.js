@@ -17,18 +17,15 @@ var options = [
             title: "Goto %s on NHentai",
             contexts: ['selection'],
             parentId: "hentai_root",
-            id: "child_NHentai",
-            onclick: function(clickData, tab) {
-                chrome.tabs.create({url : "https://nhentai.net/g/" + clickData.selectionText.trim() });
-            }
+            id: "child_NHentai"
         },
         update: {
             title: "Goto %s on NHentai",
             contexts: ['selection'],
             parentId: "hentai_root",
-            onclick: function(clickData, tab) {
-                chrome.tabs.create({url : "https://nhentai.net/g/" + clickData.selectionText.trim() });
-            }
+        },
+        onclick: function(clickData, tab) {
+            chrome.tabs.create({url : "https://nhentai.net/g/" + clickData.selectionText.trim() });
         }
     },
     {
@@ -37,18 +34,15 @@ var options = [
             title: "Goto %s on HentaiVn",
             contexts: ['selection'],
             parentId: "hentai_root",
-            id: "child_HentaiVN",
-            onclick: function(clickData, tab) {
-                chrome.tabs.create({url : `https://hentaivn.tv/${clickData.selectionText.trim()}-doc-truyen-.html` });
-            }
+            id: "child_HentaiVN"
         },
         update: {
             title: "Goto %s on HentaiVn",
             contexts: ['selection'],
             parentId: "hentai_root",
-            onclick: function(clickData, tab) {
-                chrome.tabs.create({url : `https://hentaivn.tv/${clickData.selectionText.trim()}-doc-truyen-.html` });
-            }
+        },
+        onclick: function(clickData, tab) {
+            chrome.tabs.create({url : `https://hentaivn.tv/${clickData.selectionText.trim()}-doc-truyen-.html` });
         }
     },
     {
@@ -57,22 +51,25 @@ var options = [
             title: "Goto %s on pixiv.net",
             contexts: ['selection'],
             parentId: "hentai_root",
-            id: "child_pixiv",
-            onclick: function(clickData, tab) {
-                chrome.tabs.create({url : `https://www.pixiv.net/en/artworks/${clickData.selectionText.trim()}` });
-            }
+            id: "child_pixiv"
         },
         update: {
             title: "Goto %s on pixiv.net",
             contexts: ['selection'],
             parentId: "hentai_root",
-            onclick: function(clickData, tab) {
-                chrome.tabs.create({url : `https://www.pixiv.net/en/artworks/${clickData.selectionText.trim()}` });
-            }
+        },
+        onclick: function(clickData, tab) {
+            chrome.tabs.create({url : `https://www.pixiv.net/en/artworks/${clickData.selectionText.trim()}` });
         }
     }
 ];
-
+chrome.contextMenus.onClicked.addListener(function(clickData, tab) {
+    options.forEach(option =>{
+        if(clickData.menuItemId == option.cmid){
+            option.onclick(clickData, tab);
+        }
+    });
+});
 chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
     if (msg.request === 'hentaiContextMenu') {
         var type = msg.selection;

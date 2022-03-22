@@ -50,6 +50,26 @@ var options = [
                 chrome.tabs.create({url : `https://hentaivn.tv/${clickData.selectionText.trim()}-doc-truyen-.html` });
             }
         }
+    },
+    {
+        cmid: null,
+        create:{
+            title: "Goto %s on pixiv.net",
+            contexts: ['selection'],
+            parentId: "hentai_root",
+            id: "child_pixiv",
+            onclick: function(clickData, tab) {
+                chrome.tabs.create({url : `https://www.pixiv.net/en/artworks/${clickData.selectionText.trim()}` });
+            }
+        },
+        update: {
+            title: "Goto %s on pixiv.net",
+            contexts: ['selection'],
+            parentId: "hentai_root",
+            onclick: function(clickData, tab) {
+                chrome.tabs.create({url : `https://www.pixiv.net/en/artworks/${clickData.selectionText.trim()}` });
+            }
+        }
     }
 ];
 

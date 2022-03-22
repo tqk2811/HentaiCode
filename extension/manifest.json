@@ -1,18 +1,11 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "background": {
-    "scripts": [
-      "scripts/background.js"
-    ],
-    "persistent": true
+    "service_worker": "scripts/background.js"
   },
   "name": "Hentai Code",
   "description": "Hentai Code",
   "version": "1.0.0",
-  
-  "browser_action": {
-    "default_icon": "icon/icon.png"
-  },
   "icons": {
     "128": "icon/icon.png",
     "16": "icon/icon.png",
